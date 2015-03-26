@@ -1,6 +1,8 @@
+# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility
+from portableQueue import Queue
 import numpy as np
 from prob_cond_true_freq import prob_cond_true_freq
-from multiprocessing import Process, Queue, Lock
+from multiprocessing import Process, Lock
 import parse_pileup as pp
 
 class A:

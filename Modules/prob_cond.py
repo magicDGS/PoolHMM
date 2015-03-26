@@ -1,4 +1,6 @@
-from multiprocessing import Process, Queue, Lock
+# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility
+from portableQueue import Queue
+from multiprocessing import Process, Lock
 import parse_pileup as pp
 import numpy as np
 import time
