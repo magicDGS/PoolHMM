@@ -1,4 +1,4 @@
-# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility
+# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility, and opening bgzipped pileups
 from portableQueue import Queue
 from multiprocessing import Process, Lock
 import parse_pileup as pp
@@ -62,7 +62,7 @@ def procress_emit(qinput,qoutput,lock,pileup_prefix,parser_parameters,n,p_neutra
 	parser = pp.Pileup_parser_ref(qualityEncoding,minQual,minCount,minCoverage,maxCoverage)
     f = pp.Format()
     
-    pileup = open(pileup_prefix+'.pileup', 'r')
+    pileup = pp.openPileup(pileup_prefix, 'r')
     for item in iter(qinput.get,'STOP'):
         l = []
         pileup.seek(item[0])
@@ -104,7 +104,7 @@ def comp_emit_seg_direct(parser_parameters,region,nProcess,n,prefix,p_neutral,pi
     task_queue = Queue()
     done_queue = Queue()
     block = 10000
-    pileup = open(pileup_prefix+'.pileup', 'rb')
+    pileup = pp.openPileup(pileup_prefix, 'rb')
 
     # computation of cond prob for segsites
     if region:

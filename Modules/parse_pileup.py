@@ -1,8 +1,40 @@
 #!/usr/bin/python
-
+# Modified by Daniel Gomez-Sanchez: adding opening bgzipped pileups
 import sys
 import getopt
 import re
+import os.path
+import gzip
+
+def openPileup(pileup_prefix, mode='r', log=False):
+    """
+    Open pileup in text format or gzipped
+    pileup_prefix is the prefix of .pileup.gz or .pileup
+    mode is the way of opening the file
+    log=True prints if compressed or not compressed are used
+    return a filehandler
+    exit if IOError found
+    """
+    #pileup file loading
+    try:
+        zippedFile = pileup_prefix + ".pileup.gz"
+        textFile = pileup_prefix + ".pileup"
+        ## try to find the gzipped one
+        if os.path.isfile(zippedFile):
+            fileToOpen = zippedFile
+            pileup = gzip.open(fileToOpen, mode)
+        else:
+            ## try to open the other one
+            fileToOpen = textFile
+            pileup = open(fileToOpen, mode)
+        if log:
+            print ("Input file: %s" % fileToOpen)
+        ## return the fh
+        return pileup
+    except IOError:
+        print ("Could not open input file %s" %  fileToOpen)
+        sys.exit()
+
 
 class Format:
     "Create the format of the output files"

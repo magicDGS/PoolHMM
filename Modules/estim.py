@@ -1,4 +1,4 @@
-# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility
+# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility, and opening bgzipped pileups
 from portableQueue import Queue
 import numpy as np
 from prob_cond_true_freq import prob_cond_true_freq
@@ -48,7 +48,7 @@ def quickSort(L):
 def process_estim(qinput,qoutput,lock,parser_parameters,pileup_prefix,n,p_neutral,ancestral):
     print 'process starts'
 
-    pileup = open(pileup_prefix+'.pileup', 'r')
+    pileup = pp.openPileup(pileup_prefix, 'r')
     
     qualityEncoding = parser_parameters[0]
     minQual = parser_parameters[1]
@@ -111,7 +111,7 @@ def estimation(parser_parameters, region, nProcess, n, prefix,p_neutral,pileup_p
     task_queue = Queue()
     done_queue = Queue()
     block = 10000
-    pileup = open(pileup_prefix+'.pileup', 'rb')
+    pileup = pp.openPileup(pileup_prefix, 'r')
 
     if region:
         chro = region[0]

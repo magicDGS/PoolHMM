@@ -1,4 +1,4 @@
-# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility
+# Modified by Daniel Gomez-Sanchez: adding portableQueue dependency for MacOS compatibility, and opening bgzipped pileups
 from portableQueue import Queue
 from multiprocessing import Process, Lock
 import parse_pileup as pp
@@ -11,7 +11,7 @@ from comp_spectrum import comp_spectrum
 
 #function that is parallelized
 def process_probCond(qinput,qoutput,lock,pileup_prefix,parser_parameters,ratio,n,ancestral):
-    pileup = open(pileup_prefix+'.pileup', 'r')
+    pileup = pp.openPileup(pileup_prefix, 'r')
     qualityEncoding = parser_parameters[0]
     minQual = parser_parameters[1]
     minCount = parser_parameters[2]
@@ -65,7 +65,7 @@ def prob_cond(parser_parameters,region,theta,nProcess,ratio,n,prefix,pileup_pref
     task_queue = Queue()
     done_queue = Queue()
     block = 10000
-    pileup = open(pileup_prefix+'.pileup', 'rb')
+    pileup = pp.openPileup(pileup_prefix, 'rb')
    
     if region:
         chro = region[0]

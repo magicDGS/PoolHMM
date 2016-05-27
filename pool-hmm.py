@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# Modified by Daniel Gomez-Sanchez: adding opening bgzipped pileups
 import sys
 try:
     import numpy as np
@@ -18,6 +19,7 @@ from prob_cond import prob_cond
 from comp_emit_seg_direct import comp_emit_seg_direct
 from pred import prediction
 from estim import estimation
+from parse_pileup import openPileup
 
 #print the inforations about the options
 def usage():
@@ -224,11 +226,7 @@ if __name__ == "__main__":
 	sys.exit()
 
     #pileup file loading
-    try: 
-        pileup = open(pileup_prefix + '.pileup','r')
-    except IOError:
-        print ("Could not open input file %s" %  (pileup_prefix + '.pileup'))
-        sys.exit()
+    pileup = openPileup(pileup_prefix, 'r', True)
     #...
 
     # management of the region if it is specified with the --region option
