@@ -38,7 +38,7 @@ def hmm_viterbi(T,E,mu0):
     pred[nb_sites-1]=v
     for i in range(nb_sites-2,-1,-1):
 
-        pred[i] = Zarg[pred[i+1]-1, i+1]
+        pred[i] = Zarg[int(pred[i+1]-1), i+1]
     #...
     '''for i in range(len(pred)):
         pred[i] += 1
